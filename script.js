@@ -2,6 +2,104 @@
 document.addEventListener('contextmenu', e => e.preventDefault());
 
 // =============================================
+// INTRO — LIQUID GLASS + LETTERS ASSEMBLE
+// =============================================
+(function () {
+    const intro = document.getElementById('intro-screen');
+    if (!intro) return;
+
+    document.body.classList.add('intro-active');
+
+    const letters = Array.from(document.querySelectorAll('.il'));
+    const sub     = document.getElementById('intro-sub');
+    const line    = document.getElementById('ig-line');
+
+    // Each letter flies in from a different edge/direction
+    // Directions: spread evenly from 6 sides so word "assembles"
+    const origins = [
+        { x: -140, y: -120, r: -35, s: 0.4 },  // f  — top-left
+        { x:  0,   y: -160, r:  15, s: 0.45 },  // r  — top
+        { x:  130, y: -100, r:  28, s: 0.4 },   // a  — top-right
+        { x: -130, y:  110, r: -25, s: 0.45 },  // z  — bottom-left
+        { x:  0,   y:  155, r: -12, s: 0.4 },   // b  — bottom
+        { x:  140, y:  100, r:  30, s: 0.38 },  // 1  — bottom-right
+    ];
+
+    // Scale by screen size
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const scale = Math.max(vw, 600) / 600;
+
+    // Set initial scattered positions
+    letters.forEach((el, i) => {
+        const o = origins[i];
+        const tx = o.x * scale * (1.8 + Math.random() * 0.6);
+        const ty = o.y * scale * (1.8 + Math.random() * 0.6);
+        el.style.transition = 'none';
+        el.style.opacity    = '0';
+        el.style.transform  = `translate(${tx}px, ${ty}px) rotate(${o.r * 2}deg) scale(${o.s})`;
+    });
+
+    // --- Progress line animation (JS driven for smoothness) ---
+    let lineProgress = 0;
+    const TOTAL_MS   = 5200; // total intro duration
+    const lineStart  = performance.now();
+    function tickLine(now) {
+        const elapsed = now - lineStart;
+        const t = Math.min(elapsed / TOTAL_MS, 1);
+        // ease: slow start, fast middle, slow end
+        const eased = t < 0.5
+            ? 2 * t * t
+            : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        lineProgress = eased * 100;
+        if (line) line.style.width = lineProgress + '%';
+        if (t < 1) requestAnimationFrame(tickLine);
+    }
+    requestAnimationFrame(tickLine);
+
+    // Phase 1: flash letters in at random positions (barely visible)
+    setTimeout(() => {
+        letters.forEach((el) => {
+            el.style.transition = 'opacity 0.8s ease';
+            el.style.opacity    = '0.15';
+        });
+    }, 250);
+
+    // Phase 2: letters assemble into word — staggered
+    const ASSEMBLE_START = 1100;
+    const STAGGER        = 160; // ms between each letter
+
+    letters.forEach((el, i) => {
+        setTimeout(() => {
+            el.style.transition = `transform 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+                                   opacity  0.9s ease`;
+            el.style.transform  = 'translate(0,0) rotate(0deg) scale(1)';
+            el.style.opacity    = '1';
+        }, ASSEMBLE_START + i * STAGGER);
+    });
+
+    // Phase 3: after last letter lands, show "портфолио"
+    const LAST_LETTER_DONE = ASSEMBLE_START + (letters.length - 1) * STAGGER + 1600 + 250;
+    setTimeout(() => {
+        if (sub) sub.classList.add('sub-show');
+    }, LAST_LETTER_DONE);
+
+    // Phase 4: iris-close exit
+    const EXIT_AT = LAST_LETTER_DONE + 1200;
+    setTimeout(() => {
+        intro.classList.add('intro-exit');
+        document.body.classList.remove('intro-active');
+        document.body.classList.add('intro-done');
+
+        setTimeout(() => {
+            intro.remove();
+            document.body.classList.remove('intro-done');
+        }, 1500);
+    }, EXIT_AT);
+})();
+
+
+// =============================================
 // НОВОЕ: ТЕМА
 // =============================================
 const themeToggle = document.getElementById('theme-toggle');
