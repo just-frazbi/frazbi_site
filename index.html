@@ -7,21 +7,6 @@
     <link rel="icon" type="image/png" href="icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Новый стиль для аватарок и названий на одной линии */
-        .project-title-row {
-            display: flex;
-            align-items: center;
-            gap: 10px; /* Расстояние между аватаркой и названием */
-        }
-
-        .project-title-row img.mini-project-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-    </style>
 </head>
 <body class="dark-theme">
 
@@ -32,7 +17,11 @@
     <div class="brush-stroke stroke-2"></div>
 
     <nav class="glass-nav" id="main-nav">
-        <ul class="nav-links">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
             <li><a href="#home" data-key="nav_home">Главная</a></li>
             <li><a href="#about" data-key="nav_about">Обо мне</a></li>
             <li><a href="#projects" data-key="nav_projects">Проекты</a></li>
@@ -40,6 +29,9 @@
         </ul>
         
         <div class="nav-controls">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <span class="theme-icon">🌙</span>
+            </button>
             <div class="lang-pill-wrapper">
                 <div class="lang-indicator" id="lang-indicator"></div>
                 <button onclick="changeLanguage('ru')" id="btn-ru" class="lang-btn active">RU</button>
@@ -83,11 +75,10 @@
             <div class="section-divider"></div>
 
             <section id="projects" class="scroll-reveal section-padding">
-                <h2 class="section-label title-bold" data-key="projects_title">Текущие проекты</h2>
+                <h2 class="section-label" data-key="projects_title">Текущие проекты</h2>
                 <div class="projects-grid">
                     
                     <div class="glass-card project-card border-green">
-                        <div class="card-shimmer"></div>
                         <div class="card-header">
                             <div class="status-pill green-status" data-key="status_active">Активно</div>
                             <span class="project-year">2025–2026</span>
@@ -95,9 +86,9 @@
                         <div class="card-body">
                             <div class="project-title-row">
                                 <img src="onevnl_avatar.png" class="mini-project-avatar" alt="OneVnl">
-                                <h3 class="title-bold">OneVnl</h3>
+                                <h3>OneVnl</h3>
                             </div>
-                            <p class="text-light" data-key="onevnl_desc">
+                            <p data-key="onevnl_desc">
                                 OneVnl — уникальный Vanilla+ сервер моего друга 
                                 <a href="https://elytrya.icu" target="_blank" class="elytrya-link">elytrya</a>. 
                                 На этом проекте я создаю уникальные префиксы, делаю различные ивенты и строю лобби при каждом новом вайпе.
@@ -107,7 +98,6 @@
                     </div>
 
                     <div class="glass-card project-card border-yellow">
-                        <div class="card-shimmer"></div>
                         <div class="card-header">
                             <div class="status-pill yellow" data-key="status_dev">В разработке</div>
                             <span class="project-year">2025–2026</span>
@@ -115,24 +105,23 @@
                         <div class="card-body">
                             <div class="project-title-row">
                                 <img src="multymine_avatar.png" class="mini-project-avatar" alt="MultyMine">
-                                <h3 class="title-bold">MultyMine</h3>
+                                <h3>MultyMine</h3>
                             </div>
-                            <p class="text-light" data-key="multy_desc">Сервер анархии на заказ. 30% функционала реализовано через мои кастомные плагины.</p>
+                            <p data-key="multy_desc">Сервер анархии на заказ. 30% функционала реализовано через мои кастомные плагины.</p>
                             <a href="https://www.multymine.fun" target="_blank" class="card-btn">Перейти на сайт</a>
                         </div>
                     </div>
 
                     <div class="glass-card project-card border-yellow">
-                        <div class="card-shimmer"></div>
                         <div class="card-header">
                             <div class="status-pill yellow" data-key="status_dev">В разработке</div>
                             <span class="project-year">2026</span>
                         </div>
                         <div class="card-body">
                             <div class="project-title-row">
-                                <h3 class="title-bold">SMP - Проект</h3>
+                                <h3>SMP - Проект</h3>
                             </div>
-                            <p class="text-light" data-key="artheria_desc">Украинский проект. Разработка сложных механик и кастомных плагинов под ключ.</p>
+                            <p data-key="artheria_desc">Украинский проект. Разработка сложных механик и кастомных плагинов под ключ.</p>
                         </div>
                     </div>
 
@@ -142,17 +131,16 @@
             <div class="section-divider"></div>
 
             <section id="old-projects" class="scroll-reveal section-padding">
-                <h2 class="section-label title-bold centered-heading" data-key="old_title">Старые проекты</h2>
+                <h2 class="section-label centered-heading" data-key="old_title">Старые проекты</h2>
                 <div class="projects-grid centered-grid">
                     <div class="glass-card project-card border-gray worldclans-redesign">
-                        <div class="card-shimmer"></div>
                         <div class="card-header">
                             <div class="status-pill dark-gray" data-key="status_closed">Закрыт</div>
                             <span class="project-year">2024-2025</span>
                         </div>
                         <div class="card-body centered-content">
-                            <h3 class="title-bold">WorldClans</h3>
-                            <p class="text-light" data-key="worldclans_desc">Кастомный проект сервера анархии. Включал уникальную клановую систему.</p>
+                            <h3>WorldClans</h3>
+                            <p data-key="worldclans_desc">Кастомный проект сервера анархии. Включал уникальную клановую систему.</p>
                             <div class="linked-badge">
                                 <span data-key="linked_with">Связан с </span>
                                 <a href="https://youtube.com/@Zevsik_" target="_blank" class="zevsik-tag">@Zevsik_</a>
@@ -168,9 +156,9 @@
                 <div class="modrinth-simple-wrapper large-centered">
                     <div class="modrinth-header">
                         <img src="logo.png" alt="Modrinth" class="modrinth-avatar floating-avatar">
-                        <h2 class="title-bold">Modrinth</h2>
+                        <h2>Modrinth</h2>
                     </div>
-                    <p class="text-light modrinth-desc" data-key="modrinth_text">Я публикую бесплатные плагины для Minecraft в своем профиле. Поддержите Open Source проекты.</p>
+                    <p class="modrinth-desc" data-key="modrinth_text">Я публикую бесплатные плагины для Minecraft в своем профиле. Поддержите Open Source проекты.</p>
                     <a href="https://modrinth.com/user/frazb1" target="_blank" class="premium-btn">
                         <span data-key="modrinth_btn">Открыть профиль</span>
                     </a>
@@ -179,7 +167,7 @@
         </main>
 
         <footer class="main-footer">
-            <p class="text-light footer-text">© 2026 frazb1. <span data-key="footer_note">сделано с любовьюююю <3</span></p>
+            <p>© 2026 frazb1. <span data-key="footer_note">сделано с любовьюююю <3</span></p>
         </footer>
     </div>
 

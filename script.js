@@ -1,6 +1,57 @@
 // ну чтобы пкм нельзя быо тык
 document.addEventListener('contextmenu', e => e.preventDefault());
 
+// =============================================
+// НОВОЕ: ТЕМА
+// =============================================
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = themeToggle ? themeToggle.querySelector('.theme-icon') : null;
+
+function applyTheme(theme) {
+    document.documentElement.classList.remove('dark-theme', 'light-theme');
+    document.body.classList.remove('dark-theme', 'light-theme');
+    document.documentElement.classList.add(theme + '-theme');
+    if (themeIcon) themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+    localStorage.setItem('fraz_theme', theme);
+}
+
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark-theme');
+        applyTheme(isDark ? 'light' : 'dark');
+        if (themeIcon) {
+            themeIcon.style.transform = 'rotate(360deg) scale(1.3)';
+            setTimeout(() => { themeIcon.style.transform = ''; }, 350);
+        }
+    });
+}
+
+applyTheme(localStorage.getItem('fraz_theme') || 'dark');
+
+// =============================================
+// НОВОЕ: МОБИЛЬНОЕ МЕНЮ
+// =============================================
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const navLinksEl = document.getElementById('nav-links');
+
+if (mobileMenuBtn && navLinksEl) {
+    mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = navLinksEl.classList.toggle('open');
+        mobileMenuBtn.classList.toggle('open', isOpen);
+    });
+
+    navLinksEl.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinksEl.classList.remove('open');
+            mobileMenuBtn.classList.remove('open');
+        });
+    });
+}
+
+// =============================================
+// ОРИГИНАЛЬНЫЙ КОД (не тронут)
+// =============================================
+
 // язычки
 const translations = {
     ru: {
@@ -96,6 +147,8 @@ window.addEventListener("scroll", () => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     if (scrollTop > lastScrollTop && scrollTop > 250) {
         navbar.classList.add("nav-hidden");
+        if (navLinksEl) navLinksEl.classList.remove('open');
+        if (mobileMenuBtn) mobileMenuBtn.classList.remove('open');
     } else {
         navbar.classList.remove("nav-hidden");
     }
