@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 </head>
 <body class="dark-theme">
 
@@ -59,7 +60,10 @@
         
         <div class="nav-controls">
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                <span class="theme-icon">🌙</span>
+                <!-- dark mode icon: moon-stars -->
+                <i class="theme-icon theme-icon-dark ph-bold ph-moon-stars" style="font-size:16px;"></i>
+                <!-- light mode icon: sun-horizon -->
+                <i class="theme-icon theme-icon-light ph-bold ph-sun-horizon" style="font-size:16px; display:none;"></i>
             </button>
             <div class="lang-pill-wrapper">
                 <div class="lang-indicator" id="lang-indicator"></div>

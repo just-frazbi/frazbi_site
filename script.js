@@ -103,13 +103,18 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 // НОВОЕ: ТЕМА
 // =============================================
 const themeToggle = document.getElementById('theme-toggle');
-const themeIcon = themeToggle ? themeToggle.querySelector('.theme-icon') : null;
+const iconDark  = themeToggle ? themeToggle.querySelector('.theme-icon-dark')  : null;
+const iconLight = themeToggle ? themeToggle.querySelector('.theme-icon-light') : null;
 
 function applyTheme(theme) {
     document.documentElement.classList.remove('dark-theme', 'light-theme');
     document.body.classList.remove('dark-theme', 'light-theme');
     document.documentElement.classList.add(theme + '-theme');
-    if (themeIcon) themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+    // swap icons
+    if (iconDark  && iconLight) {
+        iconDark.style.display  = theme === 'dark'  ? '' : 'none';
+        iconLight.style.display = theme === 'light' ? '' : 'none';
+    }
     localStorage.setItem('fraz_theme', theme);
 }
 
@@ -117,9 +122,12 @@ if (themeToggle) {
     themeToggle.addEventListener('click', () => {
         const isDark = document.documentElement.classList.contains('dark-theme');
         applyTheme(isDark ? 'light' : 'dark');
-        if (themeIcon) {
-            themeIcon.style.transform = 'rotate(360deg) scale(1.3)';
-            setTimeout(() => { themeIcon.style.transform = ''; }, 350);
+        // spin animation on active icon
+        const active = isDark ? iconLight : iconDark;
+        if (active) {
+            active.style.transition = 'transform 0.35s cubic-bezier(0.34,1.56,0.64,1)';
+            active.style.transform = 'rotate(25deg) scale(1.25)';
+            setTimeout(() => { active.style.transform = ''; }, 350);
         }
     });
 }
